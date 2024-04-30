@@ -94,9 +94,9 @@
           <failOnViolation>false</failOnViolation>
           <!-- printFailingErrors is pretty useful -->
           <printFailingErrors>true</printFailingErrors>
-          <rulesets>
+<!--           <rulesets>
             <ruleset>/mnt/e/practice-answer.xml</ruleset>
-          </rulesets>
+          </rulesets> -->
         </configuration>
         <executions>
         <execution>
