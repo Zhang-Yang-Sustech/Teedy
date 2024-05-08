@@ -6,6 +6,11 @@ pipeline {
         sh 'mvn -B -DskipTests clean package'
       }
     }
+    stage('Test') {
+      steps {
+        sh 'mvn test --fail-never'
+      }
+    }
     stage('doc') {
       steps {
         sh 'mvn javadoc:javadoc --fail-never'
@@ -19,8 +24,10 @@ pipeline {
     stage('Test report') {
       steps {
         sh 'mvn jacoco:report'
+        sh 'mvn surefire-report:report'
       }
     }
+    
     
     
   }
