@@ -5,9 +5,7 @@ pipeline {
         // 你的Docker仓库的凭证ID
         DOCKER_CREDENTIALS_ID = 'a'
         // 你想要推送的镜像名字
-        IMAGE_NAME = 'teedytest2024'
-        // 你想要推送的Docker Hub用户名
-        DOCKER_HUB_USER = '3055481367sustech'
+        IMAGE_NAME = '3055481367sustech/teedytest2024'
         // 标签，可以根据实际情况设置
         TAG = 'v1.0'
     }
@@ -16,31 +14,29 @@ pipeline {
     stage('Package') {
       steps {
         checkout scm
-        sh 'mvn -B -DskipTests clean package'
       }
     }
     
-    // Building Docker images
-    stage('Building and push image') {
-      steps{
-        script {
-            // 登录Docker Hub
-            docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS_ID) {
-                // 使用仓库中的Dockerfile构建镜像
-                def customImage = docker.build("${DOCKER_HUB_USER}/${IMAGE_NAME}:${TAG}", '-f Dockerfile .')
-                // 推送标签
-                customImage.push()
+     stage('Build Image') {
+            steps {
+                script {
+                    // 使用仓库中的Dockerfile构建镜像
+                    def customImage = docker.build("${IMAGE_NAME}:${TAG}", '-f Dockerfile .')
+                }
             }
         }
-      }
-    }
-    // // Uploading Docker images into Docker Hub
-    // stage('Upload image') {
-    //   steps{
-    //     sh 'sudo docker tag teedy2024_manual 3055481367sustech/teedytest2024:v1.0'
-    //     sh 'sudo docker push 3055481367sustech/teedytest2024:v1.0'
-    //   }
-    // }
+
+        stage('Push Image') {
+            steps {
+                script {
+                    // 登录Docker Hub
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS_ID) {
+                        // 推送标签
+                        customImage.push()
+                    }
+                }
+            }
+        }
     //Running Docker container
     stage('Run containers'){
       steps{
