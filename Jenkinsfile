@@ -12,6 +12,7 @@ pipeline {
     stage('Building image') {
       steps{
         sh 'sudo docker build -t teedy2024_manual .'
+        sh ' '
 
       }
     }
