@@ -38,6 +38,20 @@ pipeline {
             }
         }
 
+     // 添加一个阶段来停止和移除之前的容器
+        stage('Stop and Remove Previous Containers') {
+            steps {
+                // 停止并移除名为teedy_01的容器
+                sh "sudo docker stop teedy_01 || true"
+                sh "sudo docker rm teedy_01 || true"
+                // 停止并移除名为teedy_02的容器
+                sh "sudo docker stop teedy_02 || true"
+                sh "sudo docker rm teedy_02 || true"
+                // 停止并移除名为teedy_03的容器
+                sh "sudo docker stop teedy_03 || true"
+                sh "sudo docker rm teedy_03 || true"
+            }
+        }
     //Running Docker container
     stage('Run containers'){
       steps{
