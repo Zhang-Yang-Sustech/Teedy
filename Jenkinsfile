@@ -11,8 +11,7 @@ pipeline {
     // Building Docker images
     stage('Building image') {
       steps{
-        sh 'sudo docker build -t teedy2024_manual .'
-        sh ' '
+        sh 'echo " " | sudo -S docker build -t teedy2024_manual .'
 
       }
     }
