@@ -55,9 +55,9 @@ pipeline {
     //Running Docker container
     stage('Run containers'){
       steps{
-        sh 'sudo docker run -d -p 8084:8081 --name teedy_01 ${IMAGE_NAME}:${TAG}'
-        sh 'sudo docker run -d -p 8082:8081 --name teedy_02 ${IMAGE_NAME}:${TAG}'
-        sh 'sudo docker run -d -p 8083:8081 --name teedy_03 ${IMAGE_NAME}:${TAG}'
+        sh 'sudo docker run -d -p 8084:8080 --name teedy_01 ${IMAGE_NAME}:${TAG}'
+        sh 'sudo docker run -d -p 8082:8080 --name teedy_02 ${IMAGE_NAME}:${TAG}'
+        sh 'sudo docker run -d -p 8083:8080 --name teedy_03 ${IMAGE_NAME}:${TAG}'
 
       
       }
