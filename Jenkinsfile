@@ -17,26 +17,25 @@ pipeline {
       }
     }
     
-     stage('Build Image') {
+    stage('Build Image') {
             steps {
-                script {
-                    // 使用仓库中的Dockerfile构建镜像
-                    def customImage = docker.build("${IMAGE_NAME}:${TAG}", '-f Dockerfile .')
-                }
+                // 使用Docker命令构建镜像
+                sh "sudo docker build -t ${IMAGE_NAME}:${TAG} -f Dockerfile ."
             }
         }
 
         stage('Push Image') {
             steps {
-                script {
-                    // 登录Docker Hub
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS_ID) {
-                        // 推送标签
-                        customImage.push()
-                    }
+                // 登录Docker Hub
+                withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    // 使用Docker命令登录
+                    sh "sudo docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+                    // 使用Docker命令推送镜像
+                    sh "sudo docker push ${IMAGE_NAME}:${TAG}"
                 }
             }
         }
+
     //Running Docker container
     stage('Run containers'){
       steps{
