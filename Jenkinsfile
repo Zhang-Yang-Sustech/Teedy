@@ -14,6 +14,8 @@ pipeline {
     stage('Package') {
       steps {
         checkout scm
+        sh 'mvn -B -DskipTests clean package'
+
       }
     }
     
