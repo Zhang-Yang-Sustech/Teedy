@@ -1,6 +1,13 @@
 pipeline {
   agent any
   stages{
+    stage('Package') {
+      steps {
+        checkout scmGit(branches: [[name: '*/b-12110424']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Zhang-Yang-Sustech/Teedy.git']])
+        sh 'mvn -B -DskipTests clean package'
+      }
+    }
+    
     // Building Docker images
     stage('Building image') {
       steps{
