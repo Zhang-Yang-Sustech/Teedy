@@ -41,17 +41,18 @@
 // }
 
 pipeline {
-agent any
-stages {
-stage('Build') {
-steps {
-sh 'mvn -B -DskipTests clean package'
-}
-}
-stage('K8s') {
-steps {
-sh 'kubectl set image deployments/hello-node teedy-my-update-6wq58=3055481367sustech/teedy_my_update:latest'
-}
-}
-}
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('K8s') {
+            steps {
+                sh 'minikube start'
+                sh 'kubectl set image deployments/hello-node teedy-my-update-6wq58=3055481367sustech/teedy_my_update:latest'
+            }
+        }
+    }
 }
