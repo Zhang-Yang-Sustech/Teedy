@@ -50,7 +50,7 @@ sh 'mvn -B -DskipTests clean package'
 }
 stage('K8s') {
 steps {
-sh 'kubectl set image deployments/hello-node teedy_kube=3055481367sustech/teedy_my_update'
+sh 'kubectl set image deployments/hello-node teedy-my-update-6wq58=3055481367sustech/teedy_my_update:latest'
 }
 }
 }
