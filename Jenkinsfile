@@ -50,7 +50,6 @@ pipeline {
         }
         stage('K8s') {
             steps {
-                sh 'minikube start'
                 sh 'kubectl set image deployments/hello-node teedy-my-update-6wq58=3055481367sustech/teedy_my_update:latest'
             }
         }
